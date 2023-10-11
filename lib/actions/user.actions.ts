@@ -22,6 +22,7 @@ export async function updateUser({
       path,
 }: Params): Promise<void> {
     connectToDB();
+    console.log("MongoDB Connection attempted.")
 
     try {
         await User.findOneAndUpdate(
