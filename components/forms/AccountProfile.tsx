@@ -87,6 +87,8 @@ const AccountProfile = ({ user, btnTitle }: Props) => {
         }
       }
 
+      console.log("init onSubmit HIT! - ")
+
       await updateUser({
         userId: user.id,
         username: values.username,
@@ -95,6 +97,8 @@ const AccountProfile = ({ user, btnTitle }: Props) => {
         image: values.profile_photo,
         path: pathname
       });
+
+      console.log(`updateUser res: values - ${values} pathname - ${pathname}`);
 
       if(pathname == '/profile/edit') {
         router.back();
@@ -204,7 +208,9 @@ const AccountProfile = ({ user, btnTitle }: Props) => {
             )}
           />
 
-          <Button type="submit" className='bg-primary-500'>Submit</Button>
+          <Button type="submit" className='bg-primary-500'>
+            Submit
+          </Button>
         </form>
       </Form>
     )
