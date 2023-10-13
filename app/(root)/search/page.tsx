@@ -2,8 +2,6 @@ import { currentUser } from '@clerk/nextjs';
 import { redirect } from 'next/navigation';
 import { fetchUser, fetchUsers } from '@/lib/actions/user.actions';
 
-import { profileTabs } from '@/constants';
-import Image from 'next/image';
 import UserCard from '@/components/cards/UserCard';
 
 async function Page() {
