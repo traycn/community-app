@@ -35,7 +35,19 @@ type Event = {
 };
 
 export const POST = async (request: Request) => {
-  const payload = await request.json();
+
+  //// TODO: Remove this frustration.
+  // const payload = await JSON.parse(request.body);
+
+  // const payload = await request.text();
+
+  // const payloadRaw = await request.toString();
+  // const payload = JSON.parse(payloadRaw);
+
+  // const payloadBuffer = Buffer.from(await request.text());
+  // const payloadJSON = payloadBuffer.json();
+
+  const payload = await request.text();
   const header = headers();
 
   const heads = {
@@ -50,9 +62,17 @@ export const POST = async (request: Request) => {
 
   let evnt: Event | null = null;
 
+
   try {
     evnt = wh.verify(
       JSON.stringify(payload),
+
+      //// TODO: Remove this frustration.
+      // payload,
+      // JSON.parse(payload),
+      // payloadRaw,
+      // "Test",
+      
       heads as IncomingHttpHeaders & WebhookRequiredHeaders
     ) as Event;
   } catch (err) {
