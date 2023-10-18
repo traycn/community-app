@@ -9,11 +9,12 @@ import User from "../models/user.model";
 interface Params {
     text: string,
     author: string,
-    communityId: string | null,
+    // communityId: string | null,
     path: string
 }
 
-export async function createThread({text, author, communityId, path}: Params) {
+//, communityId
+export async function createThread({text, author, path}: Params) {
     
     try {
             
@@ -22,7 +23,7 @@ export async function createThread({text, author, communityId, path}: Params) {
         const createdThread = await Thread.create({
             text,
             author,
-            community: null,
+            // community: null,
         });
 
         // Update user model
