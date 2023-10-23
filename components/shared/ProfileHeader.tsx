@@ -40,8 +40,6 @@ const ProfileHeader = ({
         </div>
       </div>
 
-      {/* TOOD: Community */}
-
       <p className="mt-6 max-w-lg test-base-regular text-light-2">{bio}</p>
 
       <div className="mt-12 h-0.5 w-full bg-dark-3" />

@@ -11,11 +11,6 @@ interface Props {
         image: string;
         id: string;
     };
-    // community: {
-    //     id: string;
-    //     name: string;
-    //     image: string;
-    // } | null;
     createdAt: string;
     comments: {
         author: {
@@ -31,7 +26,6 @@ const ThreadCard = ({
     parentId,
     content,
     author,
-    // community,
     createdAt,
     comments,
     isComment,
