@@ -129,6 +129,10 @@
   @apply focus-visible:ring-0 focus-visible:ring-transparent focus-visible:ring-offset-0 !important;
 }
 
+.no-focus:focus {
+  @apply outline-none !important;
+}
+
 /* Account Profile  */
 .account-form_image-label {
   @apply flex h-24 w-24 items-center justify-center rounded-full bg-dark-4 !important;
