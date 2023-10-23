@@ -6,6 +6,7 @@ const nextConfig = {
     experimental: {
       serverActions: true,
       serverComponentsExternalPackages: ["mongoose"],
+      appDir: true
     },
     eslint: {
       // Warning: This allows production builds to successfully complete even if
