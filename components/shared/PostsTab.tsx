@@ -1,12 +1,12 @@
 import { redirect } from "next/navigation";
-import { fetchUserThreads } from "@/lib/actions/user.actions";
-import ThreadCard from "../cards/ThreadCard";
+import { fetchUserPosts } from "@/lib/actions/user.actions";
+import PostCard from "../cards/PostCard";
 
 interface Result {
   name: string;
   image: string;
   id: string;
-  threads: {
+  posts: {
     _id: string;
     text: string;
     parentId: string | null;
@@ -30,10 +30,10 @@ interface Props {
   accountType: string;
 }
 
-async function ThreadsTab({ currentUserId, accountId, accountType }: Props) {
+async function PostsTab({ currentUserId, accountId, accountType }: Props) {
   let result: Result;
 
-  result = await fetchUserThreads(accountId);
+  result = await fetchUserPosts(accountId);
 
   if (!result) {
     redirect("/");
@@ -41,28 +41,28 @@ async function ThreadsTab({ currentUserId, accountId, accountType }: Props) {
 
   return (
     <section className='mt-9 flex flex-col gap-10'>
-      {result.threads.map((thread) => (
-        <ThreadCard
-          key={thread._id}
-          id={thread._id}
+      {result.posts.map((post) => (
+        <PostCard
+          key={post._id}
+          id={post._id}
           currentUserId={currentUserId}
-          parentId={thread.parentId}
-          content={thread.text}
+          parentId={post.parentId}
+          content={post.text}
           author={
             accountType === "User"
               ? { name: result.name, image: result.image, id: result.id }
               : {
-                  name: thread.author.name,
-                  image: thread.author.image,
-                  id: thread.author.id,
+                  name: post.author.name,
+                  image: post.author.image,
+                  id: post.author.id,
                 }
           }
-          createdAt={thread.createdAt}
-          comments={thread.children}
+          createdAt={post.createdAt}
+          comments={post.children}
         />
       ))}
     </section>
   );
 }
 
-export default ThreadsTab;
+export default PostsTab;

@@ -16,16 +16,16 @@ import Image from "next/image";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 import { usePathname, useRouter } from "next/navigation";
-import { CommentValidation } from "@/lib/validations/thread";
-import { addCommentToThread } from "@/lib/actions/thread.actions";
+import { CommentValidation } from "@/lib/validations/post";
+import { addCommentToPost } from "@/lib/actions/post.actions";
 
 interface Props {
-    threadId: string;
+    postId: string;
     currentUserImg: string;
     currentUserId: string;
 }
 
-const Comment = ({ threadId, currentUserImg, currentUserId }: Props) => {
+const Comment = ({ postId, currentUserImg, currentUserId }: Props) => {
 
     const router = useRouter();
     const pathname = usePathname();
@@ -33,14 +33,14 @@ const Comment = ({ threadId, currentUserImg, currentUserId }: Props) => {
     const form = useForm<z.infer<typeof CommentValidation>>({
       resolver: zodResolver(CommentValidation),
       defaultValues: {
-        thread: '',
+        post: '',
       },
     });
 
     const onSubmit = async (values: z.infer<typeof CommentValidation>) => {
-        await addCommentToThread (
-          threadId, 
-          values.thread, 
+        await addCommentToPost (
+          postId, 
+          values.post, 
           JSON.parse(currentUserId), 
           pathname
         )
@@ -58,7 +58,7 @@ const Comment = ({ threadId, currentUserImg, currentUserId }: Props) => {
   
           <FormField
               control={form.control}
-              name='thread'
+              name='post'
               render={({ field }) => (
               <FormItem className='flex w-full items-center gap-3'>
                   <FormLabel>

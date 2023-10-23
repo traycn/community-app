@@ -23,8 +23,8 @@
     @apply text-center !text-base-regular text-light-3;
   }
 
-  /* thread card  */
-  .thread-card_bar {
+  /* post card  */
+  .post-card_bar {
     @apply relative mt-2 w-0.5 grow rounded-full bg-neutral-800;
   }
 
@@ -127,6 +127,10 @@
 
 .no-focus {
   @apply focus-visible:ring-0 focus-visible:ring-transparent focus-visible:ring-offset-0 !important;
+}
+
+.no-focus:focus {
+  @apply outline-none !important;
 }
 
 /* Account Profile  */
