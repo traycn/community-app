@@ -16,8 +16,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 
 import { usePathname, useRouter } from "next/navigation";
 
-import { ThreadValidation } from "@/lib/validations/thread";
-import { createThread } from "@/lib/actions/thread.actions";
+import { PostValidation } from "@/lib/validations/post";
+import { createPost } from "@/lib/actions/post.actions";
 
 interface Props {
   user: {
@@ -31,24 +31,22 @@ interface Props {
   btnTitle: string;
 }
 
-
-
-function PostThread({ userId }: { userId: string }) {
+function CreatePost({ userId }: { userId: string }) {
 
     const router = useRouter();
     const pathname = usePathname();
   
     const form = useForm({
-      resolver: zodResolver(ThreadValidation),
+      resolver: zodResolver(PostValidation),
       defaultValues: {
-        thread: '',
+        post: '',
         accountId: userId,
       },
     });
 
-    const onSubmit = async (values: z.infer<typeof ThreadValidation>) => {
-        await createThread({
-            text: values.thread, 
+    const onSubmit = async (values: z.infer<typeof PostValidation>) => {
+        await createPost({
+            text: values.post, 
             author: userId, 
             path: pathname
         });
@@ -66,7 +64,7 @@ function PostThread({ userId }: { userId: string }) {
 
         <FormField
             control={form.control}
-            name='thread'
+            name='post'
             render={({ field }) => (
             <FormItem className='flex w-full flex-col gap-3'>
                 <FormLabel className='text-base-semibold text-light-2'>
@@ -83,7 +81,7 @@ function PostThread({ userId }: { userId: string }) {
             )}
         />
 
-        <Button type="submit" className="bg-primary-500">Post Thread</Button>
+        <Button type="submit" className="bg-primary-500">Publish Post</Button>
       </form>
     </Form>
     
@@ -91,4 +89,4 @@ function PostThread({ userId }: { userId: string }) {
     )
 }
 
-export default PostThread;
+export default CreatePost;

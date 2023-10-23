@@ -16,8 +16,8 @@ export const sidebarLinks = [
     },
     {
       imgURL: "/assets/create.svg",
-      route: "/create-thread",
-      label: "Create Thread",
+      route: "/create-post",
+      label: "Create Post",
     },
     {
       imgURL: "/assets/user.svg",
@@ -27,7 +27,7 @@ export const sidebarLinks = [
   ];
   
   export const profileTabs = [
-    { value: "threads", label: "Threads", icon: "/assets/reply.svg" },
+    { value: "posts", label: "Posts", icon: "/assets/reply.svg" },
     { value: "replies", label: "Replies", icon: "/assets/members.svg" },
     { value: "tagged", label: "Tagged", icon: "/assets/tag.svg" },
   ];

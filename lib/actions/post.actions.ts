@@ -1,7 +1,7 @@
 "use server"
 
-import { ThreadValidation } from "../validations/thread";
-import Thread from "../models/thread.model";
+import { PostValidation } from "../validations/post";
+import Post from "../models/post.model";
 import { connectToDB } from "../mongoose";
 import { revalidatePath } from "next/cache";
 import User from "../models/user.model";
@@ -12,38 +12,38 @@ interface Params {
     path: string
 }
 
-export async function createThread({text, author, path}: Params) {
+export async function createPost({text, author, path}: Params) {
     
     try {
             
         connectToDB();
 
-        const createdThread = await Thread.create({
+        const createdPost = await Post.create({
             text,
             author,
         });
 
         // Update user model
         await User.findByIdAndUpdate(author, {
-            $push: { threads: createdThread._id }
+            $push: { posts: createdPost._id }
         })
 
         revalidatePath(path);
         
     } catch (error: any) {
-        throw new Error(`Error creating thread: ${error.message}`);
+        throw new Error(`Error creating post: ${error.message}`);
     }
     
 }
 
-export async function fetchThreads(pageNumber = 1, pageSize = 20) {
+export async function fetchPosts(pageNumber = 1, pageSize = 20) {
     connectToDB();
 
-    // Calculate the nuber of threads (posts) to skip
+    // Calculate the nuber of posts to skip
     const skipAmount = (pageNumber - 1) * pageSize;
 
-    // Fetch the threads (posts) that have no parents (top-level threads...)
-    const threadsQuery = Thread.find({ parentId: {$in: [null, undefined]} })
+    // Fetch the posts that have no parents (top-level posts...)
+    const postsQuery = Post.find({ parentId: {$in: [null, undefined]} })
         .sort({ createdAt: 'desc' })
         .skip(skipAmount)
         .limit(pageSize)
@@ -57,21 +57,21 @@ export async function fetchThreads(pageNumber = 1, pageSize = 20) {
             } 
         })
 
-        const totalThreadsCount = await Thread.countDocuments({ parentId: {$in: [null, undefined]} })
+        const totalPostsCount = await Post.countDocuments({ parentId: {$in: [null, undefined]} })
 
-        const threads = await threadsQuery.exec();
+        const posts = await postsQuery.exec();
 
-        const isNext = totalThreadsCount > skipAmount + threads.length;
+        const isNext = totalPostsCount > skipAmount + posts.length;
 
-        return { threads, isNext }
+        return { posts, isNext }
 }
 
-export async function fetchThreadById(id: string) {
+export async function fetchPostById(id: string) {
     connectToDB();
 
     try {
 
-        const thread = await Thread.findById(id)
+        const post = await Post.findById(id)
             .populate({
                 path: 'author',
                 model: User,
@@ -87,7 +87,7 @@ export async function fetchThreadById(id: string) {
                     },
                     {
                         path:'children',
-                        model: Thread,
+                        model: Post,
                         populate: {
                             path: 'author',
                             model: User,
@@ -97,14 +97,14 @@ export async function fetchThreadById(id: string) {
                 ]
             }).exec();
 
-            return thread;
+            return post;
     } catch (error: any) {
-        throw new Error(`Error fetching thread: ${error.message}`);
+        throw new Error(`Error fetching post: ${error.message}`);
     }
 }
 
-export async function addCommentToThread(
-    threadId: string,
+export async function addCommentToPost(
+    postId: string,
     commentText: string,
     userId: string,
     path: string,
@@ -112,35 +112,32 @@ export async function addCommentToThread(
     connectToDB();
 
     try {
-      // Find the original thread by its ID
-      const originalThread = await Thread.findById(threadId);
+      // Find the original post by its ID
+      const originalPost = await Post.findById(postId);
 
-      if(!originalThread) {
-        throw new Error("Thread not found")
+      if(!originalPost) {
+        throw new Error("Post not found")
       }
 
-      const commentThread = new Thread({
+      const commentPost = new Post({
         text: commentText,
         author: userId,
-        parentId: threadId,
+        parentId: postId,
       })
       
-      // Save the new thread
-      const savedCommentThread = await commentThread.save();
+      // Save the new post
+      const savedCommentPost = await commentPost.save();
 
-      // update the original thread to include the new comment
-      originalThread.children.push(savedCommentThread._id);
+      // update the original post to include the new comment
+      originalPost.children.push(savedCommentPost._id);
 
-      // Save the original thread
-      await originalThread.save();
+      // Save the original post
+      await originalPost.save();
 
       revalidatePath(path);
       
     } catch (error: any) {
-
-        console.error("Error while adding comment:", error);
-        throw new Error(`Error adding comment to thread: ${error.message}`)
-
+        throw new Error(`Error adding comment to post: ${error.message}`)
     }
 
 

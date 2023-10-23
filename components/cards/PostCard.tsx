@@ -20,7 +20,7 @@ interface Props {
     isComment?: boolean;
 }
 
-const ThreadCard = ({
+const PostCard = ({
     id,
     currentUserId,
     parentId,
@@ -44,8 +44,7 @@ const ThreadCard = ({
                                 className="cursor-point rounded-full"
                             />
                         </Link>
-
-                        <div className="thread-card_bar" />
+                        <div className="post-card_bar" />
                     </div>
 
                     <div className="flex w-full flex-col">
@@ -59,7 +58,7 @@ const ThreadCard = ({
                             <div className="flex gap-3.5">
                                 {/* TODO: Implement the Like, Repost, and Share functionality. */}
                                 <Image src="/assets/heart-gray.svg" alt="heart" width={24} height={24} className="cursor-pointer object-contain"/>
-                                <Link href={`/thread/${id}`}>
+                                <Link href={`/post/${id}`}>
                                     <Image src="/assets/reply.svg" alt="reply" width={24} height={24} className="cursor-pointer object-contain"/>
                                 </Link>
                                 <Image src="/assets/repost.svg" alt="repost" width={24} height={24} className="cursor-pointer object-contain"/>
@@ -68,7 +67,7 @@ const ThreadCard = ({
                         </div>
 
                         {isComment && comments.length > 0 && (
-                            <Link href={`/thread/${id}`}>
+                            <Link href={`/post/${id}`}>
                                 <p className="mt-1 text-subtle-medium text-gray-1">{comments.length} replies</p>
                             </Link>
                         )}
@@ -79,4 +78,4 @@ const ThreadCard = ({
     )
 }
 
-export default ThreadCard;
+export default PostCard;

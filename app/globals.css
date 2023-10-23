@@ -23,8 +23,8 @@
     @apply text-center !text-base-regular text-light-3;
   }
 
-  /* thread card  */
-  .thread-card_bar {
+  /* post card  */
+  .post-card_bar {
     @apply relative mt-2 w-0.5 grow rounded-full bg-neutral-800;
   }
 
