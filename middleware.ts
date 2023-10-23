@@ -5,7 +5,7 @@ import { authMiddleware, redirectToSignIn } from "@clerk/nextjs";
  
 export default authMiddleware({
   beforeAuth: (req) => { 
-    redirectToSignIn();
+    redirectToSignIn({ returnBackUrl: req.url });
     // NextResponse.redirect(new URL('/sign-in', req.url));
   },
   afterAuth: (req) => {
