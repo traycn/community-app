@@ -1,9 +1,14 @@
+"use server";
 import { authMiddleware } from "@clerk/nextjs";
 import { redirect } from "next/navigation";
  
 export default authMiddleware({
-  beforeAuth: redirect("/sign-in"),
-  afterAuth: redirect("/"),
+  beforeAuth: () => { 
+    redirect("/sign-in")
+  },
+  afterAuth: () => {
+    redirect("/")
+  },
 
   publicRoutes: ["/", "/sign-in", "/sign-up"],
   ignoredRoutes: [],
