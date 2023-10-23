@@ -1,13 +1,14 @@
 "use server";
 import { authMiddleware } from "@clerk/nextjs";
-import { redirect } from "next/navigation";
+import { NextResponse } from 'next/server';
+
  
 export default authMiddleware({
-  beforeAuth: () => { 
-    redirect("/sign-in")
+  beforeAuth: (req) => { 
+    NextResponse.redirect(new URL('/sign-in', req.url));
   },
-  afterAuth: () => {
-    redirect("/")
+  afterAuth: (req) => {
+    // NextResponse.redirect(new URL('/', req.url));
   },
 
   publicRoutes: ["/", "/sign-in", "/sign-up"],
