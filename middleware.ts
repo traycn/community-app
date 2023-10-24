@@ -1,15 +1,13 @@
-"use server";
-import { authMiddleware, redirectToSignIn } from "@clerk/nextjs";
-// import { NextResponse } from 'next/server';
+import { authMiddleware } from "@clerk/nextjs";
 
- 
 export default authMiddleware({
-
+  // An array of public routes that don't require authentication.
   publicRoutes: ["/sign-in", "/sign-up"],
-  ignoredRoutes: [],
 
+  // An array of routes to be ignored by the authentication middleware.
+  ignoredRoutes: ["/api/uploadthing"],
 });
- 
+
 export const config = {
-  matcher: ['/((?!.+\\.[\\w]+$|_next).*)', '/', '/(api|trpc)(.*)'],
+  matcher: ["/((?!.*\\..*|_next).*)", "/", "/(api|trpc)(.*)"],
 };
