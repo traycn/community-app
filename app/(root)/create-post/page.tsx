@@ -10,8 +10,6 @@ async function Page() {
 
     const userInfo = await fetchUser(user.id);
 
-    if(!userInfo?.onboarded) redirect('/onboarding');
-
     return (
         <>
             <h1 className="head-text">Create Post</h1>

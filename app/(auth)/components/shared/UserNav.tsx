@@ -11,13 +11,16 @@ import {
 import Link from "next/link";
 import { currentUser } from "@clerk/nextjs";
 import { fetchUser } from "@/lib/actions/user.actions";
-
+import { redirect } from 'next/navigation';
 
 const UserNav = async () => { 
 
   const user = await currentUser();
   if (!user) return null; // to avoid typescript warnings
+
   const userInfo = await fetchUser(user.id);
+  if(!userInfo?.onboarded) redirect('/onboarding');
+
 
   // USER INFO:  {
   //   _id: new ObjectId("6535dfc95511b7094edfb8e9"),
