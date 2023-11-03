@@ -6,7 +6,7 @@ const nextConfig = {
     experimental: {
       serverActions: true,
       serverComponentsExternalPackages: ["mongoose"],
-      appDir: true
+      // appDir: true
     },
     eslint: {
       // Warning: This allows production builds to successfully complete even if
@@ -35,5 +35,5 @@ const nextConfig = {
     },
     swcMinify: false,
   };
-  
+
   module.exports = nextConfig;
