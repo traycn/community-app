@@ -1,5 +1,9 @@
 ### An open-source Community building app to support your organizations cause.
 
+Technical documentation on this application are below:  
+Run Locally - [here](docs/runLocally.md)  
+API Reference - [here](docs/apiReference.md)  
+
 # Explore this feature-rich application:
 
 ## Features:
@@ -22,3 +26,18 @@ For Facilitators:
 
 - User Management Dashboard
   - Moderate the conversations through different user management features
+
+## Technologies:
+
+- Next JS (SSR)
+- ReactJS
+- MongoDB
+- Zod
+- TailWindCSS
+
+3rd Party services:
+- Clerk
+  - Authentication/Authorization
+  - User Management
+- UploadThing
+  - Upload images
